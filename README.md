@@ -11,25 +11,44 @@
 
 ## Installation
 
-1. Clone the Repository
+### Prerequisites
 
-First, download TikTokLiveMCBE by cloning the repository:
-```bash
-git clone https://github.com/rqinix/TikTokLiveMCBE
-```
+Before you begin, ensure you have Node.js installed. If you're on a mobile device, you can use Termux to run this WebSocket server.
 
-then:
+* Node.js - [Download & Install Node.js](https://nodejs.org/)
+
+1. Download the Latest Release
+
+Download the latest version of TikTokLiveMCBE. Look for the ZIP file in the list of assets.
+- [Click Here](https://github.com/rqinix/TikTokLiveMCBE/releases/tag/v1.0.0)
+
+2. Uncompress the ZIP File
+
+- Once the download is complete, uncompress the ZIP file.
+
+3. Navigate to the Project Directory
+
 ```bash
 cd TikTokLiveMCBE
 ```
 
-2. Install the Dependencies
+4. Install the Dependencies
 
 ```bash
 npm install
 ```
 
-3. Set Up Configuration
+or if you prefer Yarn, first install Yarn globally:
+```bash
+npm install --global yarn
+```
+
+Then install the dependencies:
+```bash
+npm install
+```
+
+5. Set Up Configuration
 
 Create an `.env` file in the root directory
 
@@ -38,13 +57,22 @@ TIKTOK_USERNAME=tiktok_username
 PORT=3000 # or any other port you want to use
 ```
 
-4. Start the Server
+> **Note:** The TIKTOK_USERNAME should be the username of the TikTok account you want to connect to.
 
+6. Start the Server
+
+Start the TikTokLiveMCBE server:
 ```bash
 npm start
 ```
+or if you're using Yarn:
+```bash
+yarn start
+```
 
-5. Connect Minecraft to Server
+> When you start the TikTokLiveMCBE server, it will attempt to connect to the TikTok live stream associated with the username specified in the .env file.
+
+7. Connect Minecraft to Server
 
 In your Minecraft, connect to the server by typing the following command:
 ```bash
@@ -247,3 +275,4 @@ export function onJoin(game: TNTCoin, message: string): void {
 
 Feel free to contribute by submitting issues or pull requests. Any improvements or new features are welcome!
 
+**_Show your support by giving it a ⭐!_**
