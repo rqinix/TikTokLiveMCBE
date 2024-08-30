@@ -51,6 +51,8 @@ export function useTNTCoin() {
             gifterRank: data.topGifterRank
         });
         minecraft.sendScriptEvent('tntcoin:gift', message);
+
+        console.log(`Gift: ${data.giftName} x${data.repeatCount} from ${data.nickname}`);
     });
 
     tiktok.events.onShare((data) => {
