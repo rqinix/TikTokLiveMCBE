@@ -9,6 +9,16 @@
 
 <p align="center">TikTokLiveMCBE is a simple tool that connects your TikTok Live stream with your Minecraft.</p>
 
+## Setup Tutorial on Termux
+
+Click the image below to watch the full setup tutorial on YouTube!
+
+<div align='center'>
+
+[![Watch the video](https://img.youtube.com/vi/GQu1S_rnxkY/default.jpg)](https://youtu.be/GQu1S_rnxkY?feature=shared)
+
+</div>
+
 ## Installation
 
 ### Prerequisites
