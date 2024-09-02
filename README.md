@@ -55,7 +55,7 @@ npm install --global yarn
 
 Then install the dependencies:
 ```bash
-npm install
+yarn install
 ```
 
 5. Set Up Configuration
