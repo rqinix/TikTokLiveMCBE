@@ -24,6 +24,20 @@ export class TikTokConnection extends EventEmitter {
         this._connectionManager = connectionManager;
         this.initialize();
     }
+
+    /**
+     * Getter for TikTok username.
+     */
+    public get username(): string {
+        return this._config.tiktokUsername;
+    }
+
+    /**
+     * Getter for TikTok port.
+     */
+    public get port(): string {
+        return this._config.port;
+    }
     
     /**
      * Ensures only one instance of TikTokConnection is created.
