@@ -51,9 +51,9 @@ export default class MinecraftConnection extends EventEmitter {
             
             ws.on('message', (message) => {
                 try {
-                    this.handleMessage(message.toString());
+                    this.handleMessage(message);
                 } catch (error) {
-                    console.error(chalk.yellowBright(`Failed to parse message: ${error}`));
+                    console.error(chalk.yellowBright(`Failed to parse message: ${error.message}`));
                     console.error(chalk.yellowBright(`Message: ${message}`));
                 }
             });
@@ -117,7 +117,10 @@ export default class MinecraftConnection extends EventEmitter {
      * @param {string} message The command response message.
      */
     private handleCommandResponse(message: any): void {
-        if (message.header.messagePurpose !== 'commandResponse') return;
+        if (typeof message !== 'object' && !message.header && !message.body) {
+            console.warn(chalk.yellow('Received invalid command response message: ', message));
+            return;
+        }
 
         const requestId = message.header.requestId;
         if (!(requestId in this._awaitedQueue)) return;
@@ -142,18 +145,18 @@ export default class MinecraftConnection extends EventEmitter {
      * Handles a Minecraft message.
      * @param {string} message The Minecraft message to handle.
      */
-    private handleMessage(message: string): void {
+    private handleMessage(message: any): void {
         const msg = JSON.parse(message);
-    
+
         if (!msg.header || !msg.header.messagePurpose) {
             console.warn(chalk.yellow(`Received message without a valid header: ${message}`));
             return;
         }
     
         if (msg.header.messagePurpose === 'event') {
-            this.handleEvent(msg); // Pass the parsed object
+            this.handleEvent(msg);
         } else if (msg.header.messagePurpose === 'commandResponse') {
-            this.handleCommandResponse(msg); // Pass the parsed object
+            this.handleCommandResponse(msg); 
         } else {
             console.warn(chalk.yellow(`Unknown message purpose: ${msg.header.messagePurpose}`));
         }
@@ -162,18 +165,14 @@ export default class MinecraftConnection extends EventEmitter {
 
     /**
      * Handles Minecraft event.
-     * @param {string} message The Minecraft event message.
+     * @param message The Minecraft event message.
      */
-    private handleEvent(message: string): void { 
-        const msg = JSON.parse(message);
-
-        const eventName = msg.header.eventName;
-        if (!eventName) {
-            console.warn(chalk.yellow('Received event with no name: ', message));
+    private handleEvent(message: any): void { 
+        if (typeof message !== 'object' && !message.header && !message.body) {
+            console.warn(chalk.yellow('Received invalid event message: ', message));
             return;
         }
-
-        this.emit(eventName, message);
+        this.emit(message.header.eventName, message);
     }
 
     /**
@@ -246,4 +245,3 @@ export default class MinecraftConnection extends EventEmitter {
         this.sendCommand(`scriptevent ${eventId} ${message}`);
     }
 }
-
