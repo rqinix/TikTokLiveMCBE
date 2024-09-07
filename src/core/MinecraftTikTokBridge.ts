@@ -8,6 +8,7 @@ import { ConnectionManager } from '../lib/ConnectionManager.js';
 import MinecraftConnection from '../models/minecraft/MinecraftConnection.js';
 import { TikTokConnection } from '../models/tiktok/TikTokConnection.js';
 import { CONFIG } from '../config/config.js';
+import gradient from 'gradient-string';
 
 export class MinecraftTikTokBridge {
     public static _instance: MinecraftTikTokBridge;
@@ -87,6 +88,7 @@ export class MinecraftTikTokBridge {
     private startServer(): Promise<void> {
         return new Promise((resolve, reject) => {
             this._server.listen(this._PORT, () => {
+                console.log(chalk.bgGray(chalk.bold((gradient.atlas('!!!WELCOME TO TikTokLiveMCBE!!!')))))
                 console.log(chalk.greenBright(`Server is running on port ${this._PORT}`));
                 resolve();
             }).on('error', (error: NodeJS.ErrnoException) => {
