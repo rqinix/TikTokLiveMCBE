@@ -223,7 +223,7 @@ tiktok.events.onShare(data => {
 
 ## Using TNT Coin Add-On
 
-- [Download TNT Coin (RP)](https://github.com/rqinix/TNTCoin/releases)
+- [Download TNT Coin Addon](https://github.com/rqinix/TNTCoin/releases)
 
 In your application file (e.g., `app.ts`), you can enable the TNTCoin extension as follows:
 ```ts
