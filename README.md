@@ -6,11 +6,6 @@
 
 </div>
 
-# Overview
-
-- **[Setup Tutorial on Termux]()**
-
-
 <p align="center">TikTokLiveMCBE is a simple tool that connects your TikTok Live stream with your Minecraft.</p>
 
 ## Setup Tutorial on Termux
