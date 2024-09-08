@@ -6,6 +6,10 @@
 
 </div>
 
+# Overview
+
+- **[Setup Tutorial on Termux]()**
+
 
 <p align="center">TikTokLiveMCBE is a simple tool that connects your TikTok Live stream with your Minecraft.</p>
 
@@ -25,12 +29,15 @@ Click the image below to watch the full setup tutorial on YouTube!
 
 Before you begin, ensure you have Node.js installed. If you're on a mobile device, you can use Termux to run this WebSocket server.
 
-* Node.js - [Download & Install Node.js](https://nodejs.org/)
+- [Download & Install Node.js](https://nodejs.org/)
 
 1. Download the Latest Release
 
 Download the latest version of TikTokLiveMCBE. Look for the ZIP file in the list of assets.
-- [Click Here](https://github.com/rqinix/TikTokLiveMCBE/releases/tag/v1.0.0)
+
+> - [Download TikTokLiveMCBE](https://github.com/rqinix/TikTokLiveMCBE/releases/)
+>
+> **_Show your support by giving it a ⭐!_**
 
 2. Uncompress the ZIP File
 
@@ -173,22 +180,22 @@ minecraft.sendCommand('say hello, world!');
 You can also handle TikTok events, such as receiving gifts, likes, chats and follows, as shown below:
 
 ```ts
-import { connection } from "./src/core/MinecraftTikTokBridge.js";
+import { connection } from "./core/MinecraftTikTokBridge.js";
 
 const { tiktok, minecraft } = connection;
 
 // ...
 
 tiktok.events.onGift(data => {
-    // Check if the gift is either not a streakable gift (giftType !== 1) 
-    // or if the streak has ended (repeatEnd is true)
-    // If either condition is true, return early and do not process the gift further.
-    if (data.giftType !== 1 || data.repeatEnd) return;
+    // If this is a streakable gift and the streak is NOT ending, handle it temporarily
+    if (data.giftType === 1 && !data.repeatEnd) {
+        minecraft.sendCommand(`say ${data.uniqueId} is sending gift ${data.giftName} x${data.repeatCount} (streak in progress)`);
+        return;
+    }
 
+    // Otherwise, process the gift (final count, send Minecraft message, etc.)
     const { giftName, uniqueId, nickname } = data;
-
-    // Send a message to all players in Minecraft about the received gift
-    minecraft.sendCommand(`tellraw @a {"rawtext":[{"text":"§a§l${nickname} §7has sent §a§l${giftName}"}]}`);
+    minecraft.sendCommand(`tellraw @a {"rawtext":[{"text":"§a§l${nickname} §7has sent §a§l${giftName} x${data.repeatCount}"}]}`);
 });
 
 tiktok.events.onChat(data => {
@@ -216,8 +223,7 @@ tiktok.events.onShare(data => {
 
 ## Using TNT Coin Add-On
 
-- [Download TNT Coin (RP)](https://github.com/rqinix/RP-TNT-Coin/releases)
-- [Download TNT Coin (BP)](https://github.com/rqinix/BP-TNT-Coin/releases)
+- [Download TNT Coin (RP)](https://github.com/rqinix/TNTCoin/releases)
 
 In your application file (e.g., `app.ts`), you can enable the TNTCoin extension as follows:
 ```ts
@@ -284,5 +290,3 @@ export function onJoin(game: TNTCoin, message: string): void {
 ## Contributing
 
 Feel free to contribute by submitting issues or pull requests. Any improvements or new features are welcome!
-
-**_Show your support by giving it a ⭐!_**
