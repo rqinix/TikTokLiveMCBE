@@ -98,7 +98,7 @@ Replace `localhost` with your server’s IP address if you are not running it lo
 
 In your application file (e.g. `app.ts`), you can subscribe to Minecraft events like this:
 ```ts
-import { connection } from "./src/core/MinecraftTikTokBridge.js";
+import { connection } from "./core/MinecraftTikTokBridge.js";
 
 const { tiktok, minecraft } = connection;
 
