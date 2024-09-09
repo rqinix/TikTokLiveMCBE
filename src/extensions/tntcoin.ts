@@ -70,7 +70,6 @@ export function useTNTCoin() {
 
     tiktok.events.onGift((data) => {
         if (data.repeatEnd) {
-            minecraft.sendCommand(`tellraw @a {"rawtext":[{"text":"§a§l${data.nickname}§r§a§l sent §c§l${data.giftName}§r§a§l x${data.repeatCount}!"}]}`);
             const message = JSON.stringify({
                 uniqueId: data.uniqueId,
                 nickname: data.nickname,
