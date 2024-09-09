@@ -6,11 +6,6 @@
 
 </div>
 
-# Overview
-
-- **[Setup Tutorial on Termux]()**
-
-
 <p align="center">TikTokLiveMCBE is a simple tool that connects your TikTok Live stream with your Minecraft.</p>
 
 ## Setup Tutorial on Termux
@@ -103,7 +98,7 @@ Replace `localhost` with your server’s IP address if you are not running it lo
 
 In your application file (e.g. `app.ts`), you can subscribe to Minecraft events like this:
 ```ts
-import { connection } from "./src/core/MinecraftTikTokBridge.js";
+import { connection } from "./core/MinecraftTikTokBridge.js";
 
 const { tiktok, minecraft } = connection;
 
@@ -223,7 +218,7 @@ tiktok.events.onShare(data => {
 
 ## Using TNT Coin Add-On
 
-- [Download TNT Coin (RP)](https://github.com/rqinix/TNTCoin/releases)
+- [Download TNT Coin Addon](https://github.com/rqinix/TNTCoin/releases)
 
 In your application file (e.g., `app.ts`), you can enable the TNTCoin extension as follows:
 ```ts
