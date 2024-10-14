@@ -1,6 +1,6 @@
 {
   "name": "tiktoklivemcbe",
-  "version": "1.0.0",
+  "version": "1.1.1",
   "description": "TikTokLiveMCBE is a simple tool that connects your TikTok Live stream with your Minecraft game.",
   "main": "dist/app.js",
   "type": "module",
@@ -18,19 +18,19 @@
   "author": "Rqinix",
   "license": "ISC",
   "devDependencies": {
-    "@types/express": "^4.17.21",
+    "@types/express": "^5.0.0",
     "@types/gradient-string": "^1.1.6",
     "@types/uuid": "^10.0.0",
     "@types/ws": "^8.5.10",
-    "typescript": "^5.5.2"
+    "typescript": "^5.6.3"
   },
   "dependencies": {
     "chalk": "^5.3.0",
     "dotenv": "^16.4.5",
-    "express": "^4.19.2",
-    "gradient-string": "^2.0.2",
+    "express": "^4.21.1",
+    "gradient-string": "^3.0.0",
     "nanospinner": "^1.1.0",
-    "tiktok-live-connector": "^1.1.9",
+    "tiktok-live-connector": "^1.2.0",
     "uuid": "^10.0.0",
     "ws": "^8.17.1"
   }

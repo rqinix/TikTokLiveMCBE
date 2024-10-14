@@ -1,6 +1,7 @@
 import chalk from "chalk";
 import gradient from "gradient-string";
 import { connection } from "../core/MinecraftTikTokBridge.js";
+import { TEXT_TIKTOK_LIVE_MCBE } from "../text/index.js";
 
 const { tiktok, minecraft } = connection;
 const tntcoinLinkText = 'Download TNT COIN ADDON';
@@ -13,7 +14,14 @@ const myYoutube = chalk.redBright.underline(myYoutubeLink);
 const myTikTok = chalk.magenta.underline(myTikTokLink);
 
 export function useTNTCoin() {
-    minecraft.sendCommand('tellraw @a {"rawtext":[{"text":"§a§lTNTCoin extension loaded!"}]}');
+    const newFollowers: string[] = [];
+
+    minecraft.on('connected', () => {
+        const data = { tiktokUserName: tiktok.username, }
+        const textTNTCoin = `§cTNT§f §eCoin§f`;
+        minecraft.sendCommand(`tellraw @a {"rawtext":[{"text":"${TEXT_TIKTOK_LIVE_MCBE}: §a§l${textTNTCoin} §aextension loaded!"}]}`);
+        minecraft.sendCommand(`scriptevent tntcoin:connected ${JSON.stringify(data)}`);
+    });
 
     tiktok.webcast.on('connected', () => {
         tiktok.webcast.getAvailableGifts().then((gifts) => {
@@ -42,11 +50,14 @@ export function useTNTCoin() {
     });
 
     tiktok.events.onFollow((data) => {
-        const message = JSON.stringify({
-            uniqueId: data.uniqueId,
-            nickname: data.nickname,
-        });
-        minecraft.sendScriptEvent('tntcoin:follow', message);
+        if (!newFollowers.includes(data.uniqueId)) {
+            newFollowers.push(data.uniqueId);
+            const message = JSON.stringify({
+                uniqueId: data.uniqueId,
+                nickname: data.nickname,
+            });
+            minecraft.sendScriptEvent('tntcoin:follow', message);
+        }
     });
 
     tiktok.events.onChat((data) => {
@@ -69,15 +80,18 @@ export function useTNTCoin() {
     });
 
     tiktok.events.onGift((data) => {
+        const message = JSON.stringify({
+            uniqueId: data.uniqueId,
+            nickname: data.nickname,
+            giftName: data.giftName,
+            giftId: data.giftId,
+            giftCount: data.repeatCount,
+        });
+
         if (data.repeatEnd) {
-            const message = JSON.stringify({
-                uniqueId: data.uniqueId,
-                nickname: data.nickname,
-                giftName: data.giftName,
-                giftId: data.giftId,
-                giftCount: data.repeatCount,
-            });
             minecraft.sendScriptEvent('tntcoin:gift', message);
+        } else {
+            if (data.giftName === 'Heart Me') minecraft.sendScriptEvent('tntcoin:gift', message);
         }
     });
 

@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { WebSocketServer, WebSocket } from 'ws';
 import { EventEmitter } from 'events';
 import { ConnectionManager } from '../../lib/ConnectionManager.js';
+import { MESSAGE } from '../../text/index.js';
 
 export default class MinecraftConnection extends EventEmitter {
     private static _instance: MinecraftConnection;
@@ -43,12 +44,10 @@ export default class MinecraftConnection extends EventEmitter {
     private connect(): void {
         this._wss.on('connection', (ws) => {
             console.log(chalk.greenBright('Minecraft connection established.'));
-            
-            setTimeout(() => {
-                this.sendCommand('tellraw @a {"rawtext":[{"text":"§a§lConnected to Minecraft!"}]}');
-                this.sendCommand('playsound random.orb');
-            }, 10);
-            
+
+            this.sendCommand(`tellraw @a {"rawtext":[{"text":"${MESSAGE.CONNECTION_ESTABLISHED}"}]}`);
+            this.sendCommand('playsound random.orb');
+
             ws.on('message', (message) => {
                 try {
                     this.handleMessage(message);
@@ -65,6 +64,8 @@ export default class MinecraftConnection extends EventEmitter {
             ws.on('close', () => {
                 console.log(chalk.yellowBright('Minecraft connection closed.'));
             }); 
+
+            this.emit('connected');
         });
     }
     
