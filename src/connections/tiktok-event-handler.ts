@@ -1,8 +1,14 @@
-import { WebcastPushConnection } from 'tiktok-live-connector';
-import { ConnectionManager } from '../../lib/ConnectionManager.js';
-import chalk from 'chalk';
+import { WebcastPushConnection } from "tiktok-live-connector";
+import { ConnectionManager } from "../lib/connection-manager.js";
+import chalk from "chalk";
 
-type TikTokEvents = TikTokLikeEvent | TikTokChatEvent | TikTokFollowEvent | TikTokGiftEvent | TikTokJoinEvent | TikTokShareEvent;
+type TikTokEvents =
+  | TikTokLikeEvent
+  | TikTokChatEvent
+  | TikTokFollowEvent
+  | TikTokGiftEvent
+  | TikTokJoinEvent
+  | TikTokShareEvent;
 
 export class TikTokEventHandler {
   private readonly _tiktokLive: WebcastPushConnection;
@@ -13,7 +19,10 @@ export class TikTokEventHandler {
    * @param tiktokConnection - The TikTok WebcastPushConnection instance.
    * @param connectionManager - The connection manager instance.
    */
-  constructor(tiktokConnection: WebcastPushConnection, connectionManager: ConnectionManager) {
+  constructor(
+    tiktokConnection: WebcastPushConnection,
+    connectionManager: ConnectionManager
+  ) {
     this._tiktokLive = tiktokConnection;
     this._connectionManager = connectionManager;
   }
@@ -30,7 +39,9 @@ export class TikTokEventHandler {
   ): WebcastPushConnection {
     return this._tiktokLive.on(eventName, (data) => {
       try {
-        this._connectionManager.getConnections().forEach((socket) => handler(data));
+        this._connectionManager
+          .getConnections()
+          .forEach((socket) => handler(data));
       } catch (error) {
         console.error(chalk.red(`Error handling ${eventName} event: ${error}`));
       }
@@ -80,6 +91,6 @@ export class TikTokEventHandler {
   // Control Events
 
   public onStreamEnd(handler: (data: any) => void) {
-    return this.onEvent('streamEnd', handler);
+    return this.onEvent("streamEnd", handler);
   }
 }
