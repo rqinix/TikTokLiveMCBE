@@ -6,9 +6,15 @@
 
 </div>
 
-<p align="center">TikTokLiveMCBE is a simple tool that connects your TikTok Live stream with your Minecraft.</p>
+<p align="center">TikTokLiveMCBE is a simple tool that connects your TikTok Live stream with your Minecraft BE/PE.</p>
 
-## Setup Tutorial on Termux
+## Installation
+
+### Prerequisites
+
+Before you begin, ensure you have [Node.js](https://nodejs.org/) installed on your computer. If you're on an Android device, you can use Termux to run TikTokLiveMCBE.
+
+#### Setup Tutorial on Termux
 
 Click the image below to watch the full setup tutorial on YouTube!
 
@@ -18,15 +24,7 @@ Click the image below to watch the full setup tutorial on YouTube!
 
 </div>
 
-## Installation
-
-### Prerequisites
-
-Before you begin, ensure you have Node.js installed. If you're on a mobile device, you can use Termux to run this WebSocket server.
-
-- [Download & Install Node.js](https://nodejs.org/)
-
-1. Download the Latest Release
+1. **Download the Latest Release**
 
 Download the latest version of TikTokLiveMCBE. Look for the ZIP file in the list of assets.
 
@@ -34,17 +32,19 @@ Download the latest version of TikTokLiveMCBE. Look for the ZIP file in the list
 >
 > **_Show your support by giving it a ⭐!_**
 
-2. Uncompress the ZIP File
+2. **Uncompress the ZIP File**
 
-- Once the download is complete, uncompress the ZIP file.
+- Once the download is complete, extract the contents of the ZIP file to a folder of your choice.
 
-3. Navigate to the Project Directory
+3. **Navigate to the TikTokLiveMCBE Folder**
+
+- Using your terminal or command prompt, navigate to the extracted folder. For example:
 
 ```bash
 cd TikTokLiveMCBE
 ```
 
-4. Install the Dependencies
+4. **Install the Dependencies**
 
 ```bash
 npm install
@@ -60,18 +60,7 @@ Then install the dependencies:
 yarn install
 ```
 
-5. Set Up Configuration
-
-Create an `.env` file in the root directory
-
-```bash
-TIKTOK_USERNAME=tiktok_username
-PORT=3000 # or any other port you want to use
-```
-
-> **Note:** The TIKTOK_USERNAME should be the username of the TikTok account you want to connect to.
-
-6. Start the Server
+5. **Start the Server**
 
 Start the TikTokLiveMCBE server:
 ```bash
@@ -82,23 +71,44 @@ or if you're using Yarn:
 yarn start
 ```
 
-> When you start the TikTokLiveMCBE server, it will attempt to connect to the TikTok live stream associated with the username specified in the .env file.
+TikTokLiveMCBE will prompt you to provide your TikTok username, port number (default is `3000`), and select your desired plugins from the available options.
 
-7. Connect Minecraft to Server
+```bash
+Welcome to TikTokLiveMCBE!
+✔ Enter TikTok username (must be live): rqinix
+✔ Enter the port number: 3000
+? Select plugins to activate: (Press <space> to select, <a> to toggle all, <i> to invert selection, and <enter> to
+proceed)
+❯◯ TNT Coin by Rqinix
+```
 
-In your Minecraft, connect to the server by typing the following command:
+```bash
+Welcome to TikTokLiveMCBE!
+✔ Enter TikTok username (must be live): rqinix
+✔ Enter the port number: 3000
+✔ Select plugins to activate: TNT Coin by Rqinix
+✔ Connected to rqinix TikTok Live Stream.
+Open Minecraft and run this command '/connect localhost:3000' to connect.
+<Ctrl + C> to stop the server.
+```
+
+6. **Connect Minecraft to TikTokLiveMCBE**
+
+Once TikTokLiveMCBE is successfully connected to the live stream, open Minecraft and connect to the server using the following command:
+
 ```bash
 /connect localhost:3000
 ```
-Replace `localhost` with your server’s IP address if you are not running it locally.
 
-## Usage
+This command establishes the connection between Minecraft and TikTokLiveMCBE. Make sure the port matches the one configured during the setup process.
 
-### Subscribe to Minecraft Events
+---
 
-In your application file (e.g. `app.ts`), you can subscribe to Minecraft events like this:
+## Subscribing to Minecraft Events
+
+You can subscribe to Minecraft events like this:
 ```ts
-import { connection } from "./core/MinecraftTikTokBridge.js";
+import { connection } from "./core/TikTokLiveMcbe.js";
 
 const { tiktok, minecraft } = connection;
 
@@ -165,17 +175,18 @@ This will output:
 BlockPlaced Event: {"body":{"block":{"aux":0,"id":"diamond_block","namespace":"minecraft"},"count":1,"placedUnderWater":false,"placementMethod":0,"player":{"color":"ffededed","dimension":0,"id":-4294967295,"name":"Steve","position":{"x":11.93433761596680,"y":-56.45503997802734,"z":13.82549858093262},"type":"minecraft:player","variant":0,"yRot":-95.34191131591797},"tool":{"aux":0,"enchantments":[],"freeStackSize":0,"id":"diamond_block","maxStackSize":64,"namespace":"minecraft","stackSize":64}},"header":{"eventName":"BlockPlaced","messagePurpose":"event","version":17039360}}
 ```
 
-### Sending Minecraft Commands
+## Sending Minecraft Commands
+
 ```ts
 minecraft.sendCommand('say hello, world!');
 ```
 
-### Handling TikTok Events
+## Handling TikTok Events
 
 You can also handle TikTok events, such as receiving gifts, likes, chats and follows, as shown below:
 
 ```ts
-import { connection } from "./core/MinecraftTikTokBridge.js";
+import { connection } from "./core/TikTokLiveMcbe.js";
 
 const { tiktok, minecraft } = connection;
 
@@ -216,71 +227,53 @@ tiktok.events.onShare(data => {
 // ...
 ```
 
-## Using TNT Coin Add-On
+## Creating Plugins for TikTokLiveMCBE
 
-- [Download TNT Coin Addon](https://github.com/rqinix/TNTCoin/releases)
+TikTokLiveMCBE supports custom plugins to extend its functionality. Each plugin must have its own folder containing two files:
 
-In your application file (e.g., `app.ts`), you can enable the TNTCoin extension as follows:
-```ts
-import { connection } from "./src/core/MinecraftTikTokBridge.js";
+1. `manifest.json`
+- This file describes the plugin's metadata.
 
-// import the TNT Coin
-import { useTNTCoin } from "./src/extensions/tntcoin.js";
-
-// Enable the TNTCoin extension
-useTNTCoin();
-
-//...
+Below is an example:
 ```
-
-The TNTCoin extension listens for various TikTok events, such as join, like, chat, and gift events, and sends corresponding script events to Minecraft. These script events include messages containing relevant information, such as the nickname and unique ID of the user who triggered the event.
-
-For example, when someone joins the stream, the extension sends a `tntcoin:join` script event to Minecraft, containing the nickname and unique ID of the user who joined:
-```ts
-tiktok.events.onJoin((data) => {
-    // convert our JSON message to string
-    const message = JSON.stringify({
-        uniqueId: data.uniqueId,
-        nickname: data.nickname,
-    });
-
-    // send `/scripevent` command to minecraft
-    minecraft.sendScriptEvent('tntcoin:join', message);
-});
-```
-
-This simply just sends a minecraft command:
-```bash
-/scriptevent tntcoin:join {"uniqueId":"steve123","nickname":"steve"}
-```
-You can also run this manually in-game if you want to test a function that runs when script event like `tntcoin:join` sent without connecting to server:
-
-<div>
-
-![img1](./docs/images/image_1.png)
-![img2](./docs/images/image_2.png)
-
-</div>
-
-When the TNTCoin add-on receives the `tntcoin:join` event with the associated message, it triggers a function to execute specific actions:
-```ts
-// Path to the onJoin event handler: /src/game/events/onJoin.ts
-
-export function onJoin(game: TNTCoin, message: string): void {
-    // Parse the JSON message to string
-    const data = JSON.parse(message);
-    const { nickname, uniqueId } = data;
-
-    // Send a welcome message to the player in Minecraft
-    game.player.sendMessage(`§aWelcome, §e${nickname} (@${uniqueId})§a!`);
+{
+  "name": "My Custom Plugin",
+  "version": "1.0.0",
+  "description": "A custom plugin for TikTokLiveMCBE.",
+  "author": "Your Name"
 }
 ```
 
-<div>
+Ensure `manifest.json` includes `name`, `version`, `description`, and `author`.
 
-![img3](./docs/images/image_3.png)
+2. `main.ts` or `main.js`
+- Contains the plugin's logic. Example:
+```js
+import { TikTokLiveMCBE } from "../../core/TikTokLiveMcbe.js";
 
-</div>
+export function plugin(tiktokLiveMcbe: TikTokLiveMCBE): void {
+    const { tiktok, minecraft } = tiktokLiveMcbe;
+
+    console.log('Hello TikTokLiveMCBE');
+
+    minecraft.on("connected", () => {
+        const data = { tiktokUserName: tiktok.username };
+        minecraft.sendCommand(`tellraw @a {"rawtext":[{"text":"LOL"}]}`);
+    });
+}
+```
+
+#### Plugin Folder Structure
+
+```
+plugins/
+├── MyCustomPlugin/
+│   ├── manifest.json
+│   └── main.ts
+```
+
+### Submitting Your Plugin
+If you’ve created a plugin that you’d like to share with the community, feel free to open a pull request or contribute to the TikTokLiveMCBE repository.
 
 ## Contributing
 

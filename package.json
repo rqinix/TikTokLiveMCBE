@@ -1,12 +1,12 @@
 {
-  "name": "tiktoklivemcbe",
-  "version": "1.1.1",
+  "name": "tiktok-live-mcbe",
+  "version": "1.2.0",
   "description": "TikTokLiveMCBE is a simple tool that connects your TikTok Live stream with your Minecraft game.",
   "main": "dist/app.js",
   "type": "module",
   "scripts": {
-    "start": "tsc && node dist/app.js",
-    "build": "tsc"
+    "start": "node dist/app.js",
+    "dev": "tsc && node dist/app.js"
   },
   "keywords": [
     "TikTok",
@@ -21,17 +21,18 @@
     "@types/express": "^5.0.0",
     "@types/gradient-string": "^1.1.6",
     "@types/uuid": "^10.0.0",
-    "@types/ws": "^8.5.10",
-    "typescript": "^5.6.3"
+    "@types/ws": "^8.5.13",
+    "typescript": "^5.7.2"
   },
   "dependencies": {
-    "chalk": "^5.3.0",
-    "dotenv": "^16.4.5",
-    "express": "^4.21.1",
+    "chalk": "^5.4.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "gradient-string": "^3.0.0",
-    "nanospinner": "^1.1.0",
-    "tiktok-live-connector": "^1.2.0",
-    "uuid": "^10.0.0",
-    "ws": "^8.17.1"
+    "inquirer": "^12.3.0",
+    "nanospinner": "^1.2.2",
+    "tiktok-live-connector": "^1.2.2",
+    "uuid": "^11.0.3",
+    "ws": "^8.18.0"
   }
 }
